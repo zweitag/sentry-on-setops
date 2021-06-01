@@ -1,0 +1,4 @@
+ARG RELAY_IMAGE
+FROM ${RELAY_IMAGE}
+
+COPY ./relay/ /work/.relay

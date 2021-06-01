@@ -1,0 +1,18 @@
+ARG SENTRY_IMAGE
+FROM ${SENTRY_IMAGE}
+
+COPY ./sentry/ /etc/sentry
+
+ENV SENTRY_EVENT_RETENTION_DAYS 90
+ENV PYTHONUSERBASE "/data/custom-packages"
+ENV SENTRY_CONF "/etc/sentry"
+ENV SNUBA "http://snuba-api:1218"
+
+RUN apt update
+RUN apt install -y curl tar xz-utils
+RUN curl -sSL -o tmate.tar.xz https://github.com/tmate-io/tmate/releases/download/2.4.0/tmate-2.4.0-static-linux-amd64.tar.xz
+RUN tar -xf tmate.tar.xz -C bin --strip-components=1 tmate-2.4.0-static-linux-amd64/tmate
+RUN chmod +x /bin/tmate
+
+ENTRYPOINT ["/etc/sentry/entrypoint.sh"]
+CMD ["run", "web"]

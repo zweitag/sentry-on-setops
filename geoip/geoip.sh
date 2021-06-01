@@ -23,7 +23,7 @@ install_geoip() {
   else
     echo "IP address geolocation is configured for updates."
     echo "Updating IP address geolocation database ... "
-    if ! $dcr geoipupdate; then
+    if ! geoipupdate; then
       result='Error'
     fi
     echo "$result updating IP address geolocation database."
